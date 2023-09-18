@@ -1,1 +1,32 @@
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+int CirculatedArray(int arr[], int size){
+    int start = 0;
+    int end = size- 1;
+    
+    while(start<end){
+        int mid = start + (end- start)/2;
+        
+        if(arr[mid]> arr[end]){
+            start = mid+1;
+        }
+        else if(arr[mid] < arr[end]){
+            end = mid;
+        }
+        else{
+            end--;
+        }
+    }
+    return start;
+}
+
+int main(){
+    int arr[]= {6,7,8,9 ,1,2,3,4,5};
+    int size = sizeof(arr)/sizeof(arr[0]);
+    int result = CirculatedArray(arr, size);
+    cout<<"The number of rotations : "<<result;
+}
 
