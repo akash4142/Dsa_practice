@@ -1,0 +1,31 @@
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+void selectionsort(int arr[],int size){
+    int i,j;
+    int min;
+    for(i=0;i<size-1;i++){
+      min = i;
+      for(j=i+1;j<size;j++){
+          if(arr[j] < arr[min]){
+              min = j;
+          }
+      }
+      if(min != i){
+          int tmp= arr[min];
+          arr[min]= arr[i];
+          arr[i] = tmp;
+      }
+    }
+    for (int z=0;z<size;z++){
+        cout<<arr[z]<<" ";
+    }
+}
+
+int main(){
+    int arr[]={112,43,1432,32,64,12};
+    int size = sizeof(arr)/sizeof(arr[0]);
+    selectionsort(arr,size);
+}
