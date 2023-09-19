@@ -1,0 +1,29 @@
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+void bubblesort(int arr[],int size){
+    int tmp;
+    int i,j;
+    for(i=0;i<size-1;i++){
+        for(j=0;j<size-1-i;j++){
+            int next = j+1;
+            if(arr[j]  > arr[next]){
+                tmp = arr[j];
+                arr[j] = arr[next];
+                arr[next] = tmp;
+            }
+        }
+    }
+    for (int z = 0;z <size;z++){
+        cout<< arr[z]<<" ";
+    }
+    cout<<endl;
+}
+
+int main(){
+    int arr[]= {12,13,41,40,65,1,43};
+    int size = sizeof(arr)/sizeof(arr[0]);
+    bubblesort(arr,size);
+}
