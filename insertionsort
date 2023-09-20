@@ -1,0 +1,27 @@
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+void insertionsort(int arr[],int size){
+    int i,j;
+    int tmp;
+    for (i=1;i<size;i++){
+        tmp = arr[i];
+        for(j=i;j>0&& arr[j-1]>tmp;j--){
+            arr[j]=arr[j-1];
+        }
+        arr[j]=tmp;
+    }
+    
+    for (int z = 0; z<size;z++){
+        cout<< arr[z]<<' ';
+    }
+}
+
+
+int main(){
+    int arr[]={12,43,11,4,15,65,78,7,32};
+    int size = sizeof(arr)/sizeof(arr[0]);
+    insertionsort(arr,size);
+}
