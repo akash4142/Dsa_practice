@@ -1,14 +1,21 @@
-list = [12,32,43,12,32,54,65,12]
-size = len(list)
-target=12
+#include <iostream>
+using namespace std;
 
+int lastindex=0;
+int last_index(int arr[],int target ,int size){
+    for(int i=0;i<size;i++){
+        if(arr[i]==target){
+            lastindex=i;
+        }
+    }
+    return lastindex;
+}
 
-def total_count(arr,size,target):
-    index=-1
-    for i in range(0,size):
-        if(arr[i]==target):
-            index=i;
-    return index;
-    
-index=total_count(list,size,target)
-print('The last index is at : ',index)
+int main(){
+    int arr[]={123,34,23,12,34,23,34,12,34};
+    int target= 34;
+    int size =sizeof(arr)/sizeof(arr[2]);
+    lastindex = last_index(arr,target,size);
+    cout<<"The last element is at :"<<lastindex;
+    return 0;
+}
