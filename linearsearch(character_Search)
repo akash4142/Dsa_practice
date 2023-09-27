@@ -1,0 +1,22 @@
+
+#include <iostream>
+using namespace std;
+
+int first_index=-1;
+int character_search(const string& str,char target){
+    for(int i=0;i<str.length();i++){
+        if(str[i]==target){
+            first_index=i;
+            break;
+        }
+    }
+    return first_index;
+}
+
+int main(){
+     string str="akash";
+     char target= 'a';
+    first_index = character_search(str,target);
+    cout<<"The first character is at :"<<first_index;
+    return 0;
+}
