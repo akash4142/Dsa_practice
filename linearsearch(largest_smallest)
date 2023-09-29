@@ -1,0 +1,25 @@
+#include <iostream>
+using namespace std;
+
+
+int smallest_and_largest(int arr[],int size,int& smallest,int& largest){
+    smallest=largest=arr[0];
+    
+    for (int i=0;i<size;i++){
+        if(arr[i]<smallest){
+            smallest=arr[i];
+        }else if(arr[i]>largest){
+            largest=arr[i];
+        }
+    }
+}
+
+int main(){
+    int arr[]={12,32,43,12,32,54,65,12};
+    int size = sizeof(arr)/sizeof(arr[0]);
+    int smallest,largest;
+    smallest_and_largest(arr,size,smallest,largest);
+    cout<<"The smallest of the array elements is :: "<<smallest<<endl;
+    cout<<"The largest of the array elements is :: "<<largest;
+}
+
