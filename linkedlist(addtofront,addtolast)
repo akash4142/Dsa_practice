@@ -1,0 +1,60 @@
+#include <iostream>
+
+using namespace std;
+
+class Node {
+public:
+	int data;
+	Node* next;
+	Node(int data):data(data),next(nullptr){}
+};
+
+class LinkedList {
+	Node* head;
+public:
+	LinkedList() : head(nullptr){}
+
+	void addtofront(int data) {
+		Node* newnode = new Node(data);
+		newnode->next = head;
+		head = newnode;
+	}
+
+	void addtoend(int data) {
+		Node* newnode = new Node(data);
+		
+		if (!head) {
+			head = newnode;
+			return;
+		}
+
+		Node* current = head;
+		while (current->next) {
+			current = current->next;
+		}
+
+		current->next = newnode;
+	}
+
+
+	void display() {
+		Node* current = head;
+		while (current) {
+			cout << current->data << "->";
+			current = current->next;
+		}
+		cout << "nullptr" << endl;
+	}
+};
+
+int main() {
+	LinkedList list;
+	list.addtofront(3);
+	list.addtofront(2);
+	list.addtofront(1);
+	list.addtoend(4);
+	list.addtoend(5);
+	list.display();
+
+	return 0;
+}
