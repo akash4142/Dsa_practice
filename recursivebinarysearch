@@ -1,0 +1,25 @@
+#include <iostream>
+
+using namespace std;
+
+int recursivebinarysearch(int arr[],int target,int left ,int right){
+    int mid = (left+right)/2;
+    for (int i=0;left<right;i++){
+        if(arr[mid]==target){
+            return mid;
+        }
+        else if(arr[mid]<target){
+            return recursivebinarysearch(arr,target,mid+1,right);
+        }else{
+            return recursivebinarysearch(arr,target,0,mid-1);
+        }
+    }
+}
+
+int main(){
+    int arr[]={12,32,34,54,65,67,68};
+    int target = 68;
+    int size = sizeof(arr)/sizeof(arr[0]);
+    int result = recursivebinarysearch(arr,target,0,size);
+    cout<<"result :"<<result;
+}
