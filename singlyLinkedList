@@ -1,0 +1,144 @@
+#include <iostream>
+
+using namespace std;
+
+class Node {
+public:
+    int data;
+    Node* next;
+    Node(int data) :data(data), next(nullptr) {}
+};
+
+class LinkedList {
+    Node* head;
+public:
+    LinkedList() :head(nullptr) {}
+
+    void addtostart(int data) {
+        Node* newnode = new Node(data);
+        newnode->next = head;
+        head = newnode;
+    }
+
+    void display() {
+        Node* current = head;
+        while (current != nullptr) {
+            cout << current->data << " < ";
+            current = current->next;
+        }
+        cout << "nullptr" << endl;
+    }
+
+    void addtoend(int data) {
+        Node* newnode = new Node(data);
+        Node* current = head;
+        while (current->next != nullptr) {
+            current = current->next;
+        }
+        current->next = newnode;
+    }
+
+    bool search(int data) {
+        Node* current = head;
+        bool isfound = false;
+        while (current != nullptr && !isfound) {
+            if (data == current->data) {
+                isfound = true;
+            }
+            else {
+                current = current->next;
+            }
+        }
+        return isfound;
+    }
+
+
+    void addAfterData(int data, int targetData) {
+        Node* current = head;
+        bool isfound = false;
+
+        while (current != nullptr && !isfound) {
+            if (targetData == current->data) {
+                Node* newnode = new Node(data);
+                newnode->next = current->next;
+                current->next = newnode;
+                isfound = true;
+                break;
+            }
+            else {
+                current = current->next;
+            }
+        }
+    }
+
+    void  removeFirst() {
+        Node* current = head;
+        head = current->next;
+        delete current;
+    }
+
+    void removeLast() {
+        if (head == nullptr) {
+            return;
+        }
+        if (head->next == nullptr) {
+            delete head;
+            head = nullptr;
+            return;
+        }
+        
+        Node* current = head;
+        while (current->next->next != nullptr) {
+            current = current->next;
+        }
+        delete current->next;
+        current->next = nullptr;
+    }
+
+    void removeAnyData(int data) {
+        if (head == nullptr) {
+            return;
+        }
+
+        if (head->data == data) {
+            Node* temp = head;
+            head = head->next;
+            delete temp;
+            return;
+        }
+        Node* current = head;
+        while (current->next != nullptr) {
+            if (current->next->data == data) {
+                Node* temp = current->next;
+                current->next = temp->next;
+                delete temp;
+                return;
+            }
+            current = current->next;
+        }
+    }
+
+};
+
+int main() {
+    LinkedList myList;
+    myList.addtostart(3);
+    myList.addtostart(2);
+    myList.addtostart(1);
+    myList.display();
+
+    myList.addtoend(4);
+    myList.addtoend(5);
+    myList.addtoend(6);
+    myList.display();
+    bool isfound = myList.search(7);
+    cout << "The element is " << isfound << endl;
+    myList.addAfterData(7, 6);
+    myList.display();
+    myList.removeFirst();
+    myList.display();
+    myList.removeLast();
+    myList.display();
+    myList.removeAnyData(4);
+    myList.display();
+}
