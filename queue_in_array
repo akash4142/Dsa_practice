@@ -1,0 +1,96 @@
+#include <iostream>
+
+using namespace std;
+
+const int MAX_SIZE = 50;
+
+class queuearray {
+	int array[MAX_SIZE];
+	int front;
+	int rear;
+public:
+	queuearray() :front(-1),rear(-1) {};
+
+	bool isempty() {
+		return front == -1;
+	}
+
+	bool isfull() {
+		return (rear + 1) % MAX_SIZE == front;
+	}
+
+	void enqueue(int data) {
+		if (isfull()) {
+			cout << "The queue is full " << endl;
+			return;
+		}
+
+		if (isempty()) {
+			front = rear = 0;
+		}
+		else {
+			rear = (rear + 1) % MAX_SIZE;
+		}
+		array[rear] = data;
+	}
+
+	void dequeue() {
+		if (isempty()) {
+			cout << "The queue is empty " << endl;
+			return;
+		}
+		
+		if (front == rear) {
+			front = rear = -1;
+		}
+		else {
+			front = (front + 1) % MAX_SIZE;
+		}
+	}
+
+	int getfront() {
+		if (isempty()) {
+			cout << "The queue is empty" << endl;
+			return -1;
+		}
+		return array[front];
+	}
+
+	void display() {
+		if (isempty()) {
+			cout << "The queue is empty" << endl;
+			return ;
+		}
+		int current = front;
+		while (current != rear) {
+			cout << array[current] << " ";
+			current = (current + 1) % MAX_SIZE;
+		}
+		std::cout << array[current] << std::endl;
+	}
+};
+
+
+int main() {
+	queuearray myQueue;
+
+	myQueue.enqueue(1);
+	myQueue.enqueue(2);
+	myQueue.enqueue(3);
+	myQueue.display();
+
+	myQueue.dequeue();
+	myQueue.enqueue(4);
+	myQueue.display();
+
+	std::cout << "Front element: " << myQueue.getfront() << std::endl;
+
+	myQueue.enqueue(5);
+	myQueue.enqueue(6);
+
+	myQueue.display();
+
+	myQueue.enqueue(7); 
+
+	return 0;
+}
