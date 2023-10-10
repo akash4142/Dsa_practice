@@ -1,0 +1,61 @@
+#include <iostream>
+
+const int MAX_SIZE = 100;
+using namespace std;
+
+
+class stackArray {
+
+	int array[MAX_SIZE];
+	int top = -1;
+public:
+	stackArray() :top(-1){};
+
+	bool isempty() {
+		return top == -1;
+	}
+
+	bool isfull() {
+		return top == (MAX_SIZE - 1);
+	}
+	
+	void push(int data) {
+		if (isfull()) {
+			cout << "The stack is already full" << endl;
+			return;
+		}
+		array[++top] = data;
+	}
+
+	void pop() {
+		if (isempty()) {
+			cout << "The stack is empty" << endl;
+			return;
+		}
+		top--;
+	}
+
+	int peek() {
+		if (isempty()) {
+			cout << "The array is empty" << endl;
+			return -1;
+		}
+		return array[top];
+	}
+};
+
+int main() {
+	stackArray mystack;
+	mystack.push(4);
+	mystack.push(3);
+	mystack.push(2);
+	mystack.push(1);
+
+	cout << "The top element in current stack is " << mystack.peek() << endl;
+
+	mystack.pop();
+	mystack.pop();
+	mystack.pop();
+	cout << "The top element in current stack is " << mystack.peek() << endl;
+	return 0;
+}
