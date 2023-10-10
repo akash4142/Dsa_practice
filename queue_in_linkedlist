@@ -1,0 +1,79 @@
+#include <iostream>
+
+using namespace std;
+
+class Node {
+public:
+	int data;
+	Node* next;
+	Node(int data) :data(data), next(nullptr){}
+};
+
+class queueLinkedList {
+	Node* front;
+	Node* rear;
+public:
+	queueLinkedList():front(nullptr){}
+
+	bool isempty() {
+		return front == nullptr;
+	}
+
+	void enqueue(int data) {
+		Node* newnode = new Node(data);
+		if (isempty()) {
+			front = rear = newnode;
+		}
+		else {
+			rear->next = newnode;
+			rear = newnode;
+		}
+	}
+
+	void dequeue() {
+		if (isempty()) {
+			cout << "Queue is empty." << endl;
+			return;
+		}
+		Node* temp = front;
+		front = front->next;
+		delete temp;
+	}
+
+	int getfront() {
+		if (isempty()) {
+			cout << "Queue is empty" << endl;
+			return -1;
+		}
+		return front->data;
+	}
+
+	void display() {
+		if (isempty()) {
+			cout << "Queue is empty" << endl;
+			return;
+		}
+		Node* current = front;
+		while (current != nullptr) {
+			cout << current->data << "<";
+			current = current->next;
+		}
+		cout << endl;
+	}
+};
+
+int main() {
+	queueLinkedList myqueue;
+	myqueue.enqueue(1);
+	myqueue.enqueue(2);
+	myqueue.enqueue(3);
+	myqueue.display();
+
+	cout << "The front element is " << myqueue.getfront() << endl;
+
+	myqueue.dequeue();
+	myqueue.dequeue();
+
+	myqueue.display();
+	cout << "The front element is " << myqueue.getfront() << endl;
+}
