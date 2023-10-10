@@ -1,0 +1,114 @@
+#include <iostream>
+
+using namespace std;
+
+class Node {
+public:
+	int data;
+	Node* previous;
+	Node* next;
+	Node(int data) :data(data), previous(nullptr), next(nullptr){}
+};
+
+
+class LinkedList {
+	Node* head;
+public:
+	LinkedList() :head(nullptr){}
+
+	void addtofront(int data) {
+		Node* newnode = new Node(data);
+		newnode->next = head;
+		head = newnode;
+	 }
+
+	void display() {
+		Node* current = head;
+		while (current != nullptr) {
+			cout << current->data<<" < ";
+			current = current->next;
+		}
+		cout << "nullptr" << endl;
+	}
+
+	void addtoend(int data) {
+		Node* newnode = new Node(data);
+		if (head==nullptr) {
+			head = newnode;
+		}
+		else {
+			Node* current = head;
+			while (current->next != nullptr) {
+				current = current->next;
+			}
+
+			current->next = newnode;
+			newnode->previous = current;
+		}
+	}
+
+	bool search(int data) {
+		Node* current = head;
+		bool isfound = false;
+		while (current != nullptr) {
+			if (current->data == data) {
+				isfound = true;
+				break;
+			}
+			current = current->next;
+		}
+		return isfound;
+	}
+
+	void addafterdata(int targetdata,int data) {
+		
+		Node* current = head;
+		while (current != nullptr) {
+			if (current->data == targetdata) {
+				Node* newnode = new Node(data);
+				newnode->next = current->next;
+				if (current->next != nullptr) {
+					current->next->previous = newnode;
+				}
+				newnode->previous = current;
+				current->next = newnode;
+				break;
+			}
+			current = current->next;
+		}
+	}
+
+	void removefirst() {
+		if (head == nullptr) {
+			return;
+		}
+		Node* current = head;
+		if (current->next != nullptr) {
+			head = current->next;
+			head->previous = nullptr;
+		}
+		else {
+			head = nullptr;
+		}
+		delete current;
+	}
+
+};
+
+int main() {
+	LinkedList mylist;
+	mylist.addtofront(3);
+	mylist.addtofront(2);
+	mylist.addtofront(1);
+	mylist.display();
+	mylist.addtoend(4);
+	mylist.addtoend(5);
+	mylist.addtoend(6);
+	mylist.display();
+	bool isfound = mylist.search(6);
+	cout << "The element is found at " << isfound << endl;
+	mylist.addafterdata(6,7);
+	mylist.display();
+	mylist.removefirst();
+	mylist.display();
+}
