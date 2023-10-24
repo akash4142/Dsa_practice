@@ -1,0 +1,81 @@
+#include <iostream>
+
+using namespace std;
+
+class Node {
+public:
+    int data;
+    Node* next;
+    Node(int data):data(data),next(nullptr){}
+};
+
+class LinkedList {
+    Node* head;
+public:
+    LinkedList():head(nullptr){}
+
+    void insert(int data) {
+        Node* newnode = new Node(data);
+        newnode->next = head;
+        head = newnode;
+    }
+
+    void display() {
+        Node* current = head;
+        while (current != nullptr) {
+            cout << current->data << " << ";
+            current = current->next;
+        }
+        cout << "Nullptr"<<endl;
+    }
+
+    void merge(LinkedList list1, LinkedList list2,LinkedList& list3) {
+       
+        Node* current1 = list1.head;
+        Node* current2 = list2.head;
+
+        while (current1 != nullptr && current2 != nullptr) {
+            if (current1->data < current2->data) {
+                list3.insert(current1->data);
+                current1 = current1->next;
+            }
+            else {
+                list3.insert(current2->data);
+                current2 = current2->next;
+            }
+        }
+
+        while (current1 != nullptr) {
+            list3.insert(current1->data);
+            current1 = current1->next;
+        }
+
+        while (current2 != nullptr) {
+            list3.insert(current2->data);
+            current2 = current2->next;
+        }
+
+    }
+};
+
+
+int main() {
+    LinkedList list1;
+    LinkedList list2;
+    LinkedList list3;
+    list1.insert(11);
+    list1.insert(9);
+    list1.insert(7);
+    list1.insert(5);
+    list1.insert(3);
+    list1.insert(1);
+    list2.insert(10);
+    list2.insert(8);
+    list2.insert(6);
+    list2.insert(4);
+    list2.insert(2);
+    list1.display();
+    list2.display();
+    list3.merge(list1, list2, list3);
+    list3.display();
+}
