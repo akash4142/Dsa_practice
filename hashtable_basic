@@ -1,0 +1,57 @@
+#include<iostream>
+#include <list>
+#include <vector>
+
+using namespace std;
+
+const int tableSize = 10;
+
+int myhash(int key) {
+	return key % tableSize;
+}
+
+void insert(vector<list<pair<int, string>>>& table, int key, const string& val) {
+	int index = myhash(key);
+	table[index].push_back(make_pair(key, val));
+}
+
+string retrieve(const vector<list<pair<int, string>>>& table, int key) {
+	int index = myhash(key);
+	for (const auto& kvp : table[index]) {
+		if (kvp.first == key) {
+			return kvp.second;
+		}
+	}
+	cerr << "Key not found" << endl;
+	exit(1);
+}
+
+void remove(vector<list<pair<int, string>>>& table, int key) {
+	int index = myhash(key);
+	for (auto it = table[index].begin(); it != table[index].end(); ++it) {
+		if (it->first == key) {
+			table[index].erase(it);
+			return;
+		}
+	}
+}
+
+
+int main() {
+	vector<list<pair<int, string>>> table(tableSize);
+
+	insert(table, 1, "Akash");
+	insert(table, 2, "Ajay");
+	insert(table, 11, "Charlie");
+
+	cout << "Key 1: " << retrieve(table, 1) << endl;
+	cout << "Key 2: " << retrieve(table, 2) << endl;
+	cout << "Key 3: " << retrieve(table, 11) << endl;
+
+	remove(table, 2);
+
+	cout << "Key 2 (after removal): ";
+	cout << retrieve(table, 2) << endl;
+
+	return 0;
+}
