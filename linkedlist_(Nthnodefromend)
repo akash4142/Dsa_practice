@@ -1,0 +1,74 @@
+#include <iostream>
+
+using namespace std;
+
+class Node {
+public:
+    int data;
+    Node* next;
+    Node(int data) : data(data), next(nullptr) {}
+};
+
+class LinkedList {
+    Node* head;
+
+public:
+    LinkedList() : head(nullptr) {}
+
+    void insert(int data) {
+        Node* newnode = new Node(data);
+        newnode->next = head;
+        head = newnode;
+    }
+
+    void display() {
+        Node* current = head;
+        while (current) {
+            cout << current->data << " << ";
+            current = current->next;
+        }
+        cout << " Nullptr " << endl;
+    }
+
+    Node* Nthnode(int N) {
+        if (head == nullptr && N <=0) {
+            return nullptr;
+        }
+
+        Node* first = head;
+        Node* second = head;
+
+        for (int i = 0; i < N; i++) {
+            if (head == nullptr) {
+                return nullptr;
+            }
+            first = first->next;
+
+        }
+        while (first != nullptr) {
+            first = first->next;
+            second = second->next;
+        }
+        return second;
+    }
+        
+
+};
+
+int main() {
+    LinkedList mylist;
+
+    mylist.insert(6);
+    mylist.insert(5);
+    mylist.insert(4);
+    mylist.insert(3);
+    mylist.insert(2);
+    mylist.insert(1);
+
+    mylist.display();
+    Node* Nthnode = mylist.Nthnode(2);
+    cout << "The Nth node from the list is :: " << Nthnode->data;
+
+    
+
+}
