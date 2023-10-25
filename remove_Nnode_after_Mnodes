@@ -1,0 +1,77 @@
+#include <iostream>
+
+using namespace std;
+
+class Node {
+public:
+    int data;
+    Node* next;
+    Node(int data) : data(data), next(nullptr) {}
+};
+
+class LinkedList {
+    Node* head;
+
+public:
+    LinkedList() : head(nullptr) {}
+
+    void insert(int data) {
+        Node* newnode = new Node(data);
+        newnode->next = head;
+        head = newnode;
+    }
+
+    void display() {
+        Node* current = head;
+        while (current) {
+            cout << current->data << " << ";
+            current = current->next;
+        }
+        cout << " Nullptr " << endl;
+    }
+
+    void remove_N_nodes_After_M_nodes(int N,int M) {
+        if (head == nullptr || head->next == nullptr) {
+            return;
+        }
+
+        Node* current = head;
+        Node* temp = nullptr;
+
+        for (int i = 1; i <= M && current != nullptr; i++) {
+            temp = current;
+            current = current->next;
+        }
+
+        for (int i = 1; i <= N and current != nullptr; i++) {
+            Node* todelete = current;
+            current = current->next;
+            delete todelete;
+        }
+
+        temp->next = current;
+    }
+
+
+};
+
+int main() {
+    LinkedList mylist;
+
+    mylist.insert(9);
+    mylist.insert(8);
+    mylist.insert(7);
+    mylist.insert(6);
+    mylist.insert(5);
+    mylist.insert(4);
+    mylist.insert(3);
+    mylist.insert(2);
+    mylist.insert(1);
+
+    mylist.display();
+    mylist.remove_N_nodes_After_M_nodes(5, 2);
+    mylist.display();
+
+
+
+}
