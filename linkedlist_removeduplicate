@@ -1,0 +1,70 @@
+#include <iostream>
+
+using namespace std;
+
+class Node {
+public:
+    int data;
+    Node* next;
+    Node(int data) : data(data), next(nullptr) {}
+};
+
+class LinkedList {
+    Node* head;
+
+public:
+    LinkedList() : head(nullptr) {}
+
+    void insert(int data) {
+        Node* newnode = new Node(data);
+        newnode->next = head;
+        head = newnode;
+    }
+
+    void display() {
+        Node* current = head;
+        while (current) {
+            cout << current->data << " << ";
+            current = current->next;
+        }
+        cout << " Nullptr " << endl;
+    }
+
+    void removeduplicate() {
+        if (head == nullptr || head->next == nullptr) {
+            return;
+        }
+
+        Node* current = head;
+        while (current != nullptr && current->next!=nullptr) {
+            if (current->data == current->next->data) {
+                Node* prev = current->next;
+                current->next = current->next->next;
+                delete prev;
+            }
+            else {
+                current = current->next;
+            }
+        }
+    }
+
+
+};
+
+int main() {
+    LinkedList mylist;
+
+    mylist.insert(9);
+    mylist.insert(8);
+    mylist.insert(8);
+    mylist.insert(7);
+    mylist.insert(6);
+    mylist.insert(6);
+
+    mylist.display();
+    mylist.removeduplicate();
+    mylist.display();
+
+
+
+}
