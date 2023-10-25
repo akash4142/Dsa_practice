@@ -1,0 +1,81 @@
+#include <iostream>
+
+using namespace std;
+
+class Node {
+public:
+    int data;
+    Node* next;
+    Node(int data) : data(data), next(nullptr) {}
+};
+
+class LinkedList {
+    Node* head;
+
+public:
+    LinkedList() : head(nullptr) {}
+
+    void insert(int data) {
+        Node* newnode = new Node(data);
+        newnode->next = head;
+        head = newnode;
+    }
+
+    void display() {
+        Node* current = head;
+        while (current) {
+            cout << current->data << " << ";
+            current = current->next;
+        }
+        cout << " Nullptr " << endl;
+    }
+
+    void rotatelist(int num_of_rotation) {
+        if (head == nullptr) {
+            return;
+        }
+
+        int length = 1;
+        Node* tail = head;
+        while (tail->next != nullptr) {
+            tail = tail->next;
+            length++;
+        }
+
+        num_of_rotation= num_of_rotation % length;
+
+        if (num_of_rotation == 0) {
+            return;
+        }
+
+        Node* newtail = head;
+        for (int i = 0; i < (length - num_of_rotation); i++) {
+            newtail = newtail->next;
+        }
+
+        Node* newhead = newtail->next;
+        newtail->next = nullptr;
+        tail->next = head;
+        head = newhead;
+    }
+
+
+};
+
+int main() {
+    LinkedList mylist;
+
+    mylist.insert(6);
+    mylist.insert(5);
+    mylist.insert(4);
+    mylist.insert(3);
+    mylist.insert(2);
+    mylist.insert(1);
+
+    mylist.display();
+    mylist.rotatelist(2);
+    mylist.display();
+
+    
+
+}
