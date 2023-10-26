@@ -1,0 +1,77 @@
+//open addressing
+
+#include <iostream>
+#include <vector>
+#include <utility>
+
+using namespace std;
+
+class Hashtable {
+private:
+	int hashSize;
+	vector<pair<int, string>> table;
+	
+
+	int hash(int key) {
+		return key % hashSize;
+	}
+
+public:
+	Hashtable(int size):hashSize(size),table(size,make_pair(-1,"")){}
+
+	void insert( int key, const string& val) {
+		int index = hash(key);
+		
+		while (table[index].first != -1) {
+			index = (index + 1) % hashSize;
+		}
+		table[index] = make_pair(key, val);
+	}
+
+	string retrieve( int key) {
+		int index = hash(key);
+
+		while (table[index].first != -1) {
+			if (table[index].first == key) {
+				return table[index].second;
+			}
+			index = (index + 1) % hashSize;
+		}
+		
+		cerr << "key not found" << endl;
+		exit(1);
+	}
+
+	void remove( int key) {
+		int index = hash(key);
+
+		while (table[index].first != -1) {
+			if (table[index].first == key) {
+				table[index] = make_pair(-1, "");
+				return;
+			}
+			index = (index + 1) % hashSize;
+		}
+	}
+};
+
+
+int main() {
+	Hashtable h1(10);
+	h1.insert(1, "Akash");
+	h1.insert(2, "Radhe");
+	h1.insert(11, "krishna");
+	h1.insert(21, "shiv");
+	h1.insert(31, "Laxmi");
+
+	cout << "Key 1: " << h1.retrieve(1) << endl;
+	cout << "Key 2: " << h1.retrieve(2)<<endl;
+	cout << "Key 11: " << h1.retrieve(11)<<endl;
+	cout << "Key 21: " << h1.retrieve(21)<<endl;
+	cout << "Key 31: " << h1.retrieve(31)<<endl;
+	
+	h1.remove(21);
+	cout << "key 21 (after removal) : ";
+	cout << h1.retrieve(21);
+	
+}
