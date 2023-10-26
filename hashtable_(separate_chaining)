@@ -1,0 +1,69 @@
+//separate chaining 
+
+#include <iostream>
+#include <vector>
+#include <list>
+#include <utility>
+
+using namespace std;
+
+class Hashtable {
+private:
+	int hashSize;
+	vector<list<pair<int, string>>> table;
+	
+
+	int hash(int key) {
+		return key % hashSize;
+	}
+
+public:
+	Hashtable(int size):hashSize(size),table(size){}
+
+	void insert( int key, const string& val) {
+		int index = hash(key);
+		table[index].push_back(make_pair(key, val));
+	}
+
+	string retrieve( int key) {
+		int index = hash(key);
+		for (const auto& kvp : table[index]) {
+			if (kvp.first == key) {
+				return kvp.second;
+			}
+		}
+		cerr << "key not found" << endl;
+		exit(1);
+	}
+
+	void remove( int key) {
+		int index = hash(key);
+		for (auto it = table[index].begin(); it != table[index].end(); ++it) {
+			if (it->first == key) {
+				table[index].erase(it);
+				return;
+			}
+		}
+	}
+};
+
+
+int main() {
+	Hashtable h1(10);
+	h1.insert(1, "Akash");
+	h1.insert(2, "Radhe");
+	h1.insert(11, "krishna");
+	h1.insert(21, "shiv");
+	h1.insert(31, "Laxmi");
+
+	cout << "Key 1: " << h1.retrieve(1) << endl;
+	cout << "Key 2: " << h1.retrieve(2)<<endl;
+	cout << "Key 11: " << h1.retrieve(11)<<endl;
+	cout << "Key 21: " << h1.retrieve(21)<<endl;
+	cout << "Key 31: " << h1.retrieve(31)<<endl;
+	
+	h1.remove(21);
+	cout << "key 21 (after removal) : ";
+	cout << h1.retrieve(21);
+	
+}
