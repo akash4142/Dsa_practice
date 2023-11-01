@@ -1,0 +1,78 @@
+#include <iostream>
+#include <list>
+#include <vector>
+#include <stack>
+using namespace std;
+
+
+template <typename T>
+class Graph {
+	int V;
+	vector<list<T>> adj;
+public:
+	Graph(int vertices) {
+		this->V = vertices;
+		adj.resize(vertices);
+	}
+
+	void addedges(int v, int w) {
+		if (v < V && w < V) {
+			adj[v].push_back(w);
+		}
+		else {
+			cout << "Invalid vertices " << v << " or " << w << endl;
+		}
+	}
+
+	void display() {
+		cout << "Graph Adjacency List:" << endl;
+		for (int i = 0; i < V; i++) {
+			cout << "Vertex " << i << " -> ";
+			for (const auto& neighbor : adj[i]) {
+				cout << neighbor << " ";
+			}
+			cout << endl;
+		}
+	}
+
+
+	void DFS(int startvertex){
+		vector<bool> visited(V, false);
+		stack<int> stack;
+
+		cout << "DFS Traversal starting from vertex " << startvertex << ":" << endl;
+
+		stack.push(startvertex);
+		visited[startvertex] = true;
+		
+		while (!stack.empty()) {
+			int vertex = stack.top();
+			cout << vertex << " ";
+			stack.pop();
+
+			for (const auto& neighbour : adj[vertex]) {
+				if (!visited[neighbour]) {
+					visited[neighbour] = true;
+					stack.push(neighbour);
+				}
+			}
+
+		}
+
+
+	}
+};
+
+
+int main(){
+	Graph<int> g(4);
+	g.addedges(0, 1);
+	g.addedges(0, 2);
+	g.addedges(1, 2);
+	g.addedges(2, 2);
+	g.addedges(2, 3);
+	g.addedges(3, 1);
+	g.display();
+	g.DFS(0);
+	return 0;
+}
