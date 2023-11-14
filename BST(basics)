@@ -1,0 +1,69 @@
+
+#include <iostream>
+
+using namespace std;
+
+struct Node {
+	int data;
+	Node* left;
+	Node* right;
+
+	Node(int value):data(value),left(nullptr),right(nullptr){}
+};
+
+class BinaryTree {
+private:
+	Node* root;
+
+	Node* Insertrecursive(Node* current,int value) {
+		if (current == nullptr) {
+			return  new Node(value);
+		}
+		if (value < current->data) {
+			current->left = Insertrecursive(current->left, value);
+		}
+		else {
+			current->right = Insertrecursive(current->right, value);
+		}
+		return current;
+	}
+
+	void AllTransversal(Node* current) {
+		if (current != nullptr) {
+			AllTransversal(current->left);
+			cout << current->data << " " ;
+			AllTransversal(current->right);
+		}
+	}
+
+	
+
+public:
+	BinaryTree():root(nullptr){}
+
+	void insert(int value) {
+		root = Insertrecursive(root, value);
+	}
+
+	void Transversal() {
+		AllTransversal(root);
+	}
+
+};
+
+int main() {
+	BinaryTree tree;
+	tree.insert(5);
+	tree.insert(3);
+	tree.insert(8);
+	tree.insert(1);
+	tree.insert(4);
+	tree.insert(7);
+	tree.insert(9);
+
+	cout << "Inorder transversal :: ";
+	tree.Transversal();
+
+
+	return 0;
+}
