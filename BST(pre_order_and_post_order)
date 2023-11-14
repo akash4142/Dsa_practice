@@ -1,0 +1,194 @@
+Validate BST: Write a function to check whether a given binary tree is a valid binary search tree.
+
+Inorder Successor in BST: Given a binary search tree and a target node, find the in-order successor of the given node in the BST.
+
+Lowest Common Ancestor (LCA): Given a binary search tree and two nodes, find the lowest common ancestor (LCA) of the two nodes.
+
+Kth Smallest Element in a BST: Find the kth smallest element in a binary search tree.
+
+Convert Sorted Array to BST: Given a sorted array, convert it into a height-balanced binary search tree.
+
+Range Sum of BST: Given the root node of a binary search tree, return the sum of values of all nodes with a value in the range [low, high].
+
+Insert into a BST: Implement a function to insert a new node with a given key into a binary search tree.
+
+Delete Node in a BST: Implement a function to delete a node with a given key in a binary search tree.
+
+
+
+#include <iostream>
+#include <queue>
+using namespace std;
+
+struct Node {
+	int data;
+	Node* left;
+	Node* right;
+
+	Node(int value):data(value),left(nullptr),right(nullptr){}
+};
+
+class BinaryTree {
+private:
+	Node* root;
+
+	Node* Insertrecursive(Node* current,int value) {
+		if (current == nullptr) {
+			return  new Node(value);
+		}
+		if (value < current->data) {
+			current->left = Insertrecursive(current->left, value);
+		}
+		else {
+			current->right = Insertrecursive(current->right, value);
+		}
+		return current;
+	}
+
+	void AllTransversal(Node* current) {
+		if (current != nullptr) {
+			AllTransversal(current->left);
+			cout << current->data << " " ;
+			AllTransversal(current->right);
+		}
+	}
+
+	Node* searchvalue(Node* current, int value) {
+		if (current == nullptr || current->data == value) {
+			return current;
+		}
+
+		if (value < current->data) {
+			return searchvalue(current->left, value);
+		}
+		else {
+			return searchvalue(current->right, value);
+		}
+	}
+
+	Node* findmin(Node* current) {
+		if (current->left == nullptr) {
+			return current;
+		}
+		return findmin(current->left);
+	}
+
+	Node* deleteRecursive(Node* current, int value) {
+		if (current == nullptr) {
+			return current;
+		}
+
+		if (value < current->data) {
+			current->left = deleteRecursive(current->left, value);
+		}
+		else if (value > current->data) {
+			current->right = deleteRecursive(current->right, value);
+		}
+		else {
+			if (current->left == nullptr) {
+				Node* temp = current->right;
+				delete current;
+				return temp;
+			}
+			else if (current->right == nullptr) {
+				Node* temp = current->left;
+				delete current;
+				return temp;
+			}
+			Node* temp = findmin(current->right);
+			current->data = temp->data;
+			current->right = deleteRecursive(current->right, temp->data);
+		}
+		return current;
+	}
+
+	void Pre_Order(Node * current) {
+	
+		if (current != nullptr) {
+			cout << current->data << " ";
+			Pre_Order(current->left);
+			Pre_Order(current->right);
+		}
+	}
+
+	void Post_Order(Node* current) {
+		if (current != nullptr) {
+			Post_Order(current->left);
+			Post_Order(current->right);
+			cout << current->data << " ";
+		}
+	}
+
+
+
+public:
+	BinaryTree():root(nullptr){}
+
+	void insert(int value) {
+		root = Insertrecursive(root, value);
+	}
+
+	void Transversal() {
+		AllTransversal(root);
+	}
+
+	Node* search(int value) {
+		return searchvalue(root, value);
+	}
+
+	Node* isdelete(int value) {
+		return deleteRecursive(root, value);
+	}
+
+	void Pre_order() {
+		cout << endl;
+		cout << "Pre order is :: ";
+		Pre_Order(root);
+		cout << endl;
+	}
+
+	void Post_order() {
+		cout << endl;
+		cout << "Post order is :: ";
+		Post_Order(root);
+	}
+
+
+	
+};
+
+int main() {
+	BinaryTree tree;
+	tree.insert(5);
+	tree.insert(3);
+	tree.insert(8);
+	tree.insert(1);
+	tree.insert(4);
+	tree.insert(7);
+	tree.insert(9);
+
+	cout << "Inorder transversal :: ";
+	tree.Transversal();
+
+	
+	Node* searchresult = tree.search(7);
+	if (searchresult) {
+		cout << "\n\n Found node with value " << searchresult->data << "in the tree";
+	}
+	else {
+		cout << "\n\n Node with value" << searchresult->data << " not found in the tree";
+	}
+
+	tree.isdelete(4);
+	cout << "\n\n Deleted node with value ";
+	cout << endl;
+	cout << "Inorder transversal :: ";
+	tree.Transversal();
+
+	tree.Pre_order();
+	tree.Post_order();
+	cout << endl;
+
+
+	return 0;
+}
